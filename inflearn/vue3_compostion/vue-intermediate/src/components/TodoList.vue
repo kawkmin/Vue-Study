@@ -8,14 +8,20 @@
 </template>
 
 <script setup>
+import { watch } from 'vue'
+
 // import { ref } from 'vue'
 
-defineProps(['todoItems'])
+const props = defineProps(['todoItems', 'userId'])
 const emit = defineEmits(['remove'])
 
 function removeTodo(item, index) {
   emit('remove', item, index)
 }
+
+watch(props.todoItems, (newValue) => {
+  console.log(newValue)
+})
 
 // //data
 // const items = ref([])
