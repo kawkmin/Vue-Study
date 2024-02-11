@@ -10,7 +10,7 @@
 import TodoHeader from '@/components/TodoHeader.vue'
 import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { useTodo } from './hooks/useTodo'
 
 export default {
   components: {
@@ -26,44 +26,12 @@ export default {
     }
   },
   setup() {
-    // data
-    const todoItems = ref([])
-
-    // methods
-    function fetchTodos() {
-      const result = []
-      for (let i = 0; i < localStorage.length; i++) {
-        const todoItem = localStorage.key(i)
-        // todoItems.value.push(todoItem)
-        result.push(todoItem)
-      }
-      return result
-    }
-
-    // 라이프 사이클 API가 적용된 구간 (created,BeforeMouted )
-    // todoItems.value = fetchTodos()
-
-    console.log('1 : setup called') // 1
-
-    // 라이프 사이클 API
-    onBeforeMount(() => {
-      console.log('2 : onBeforeMount called') // 2
-      todoItems.value = fetchTodos()
-    })
-
-    onMounted(() => {
-      console.log('3 : onMounted called') // 3
-    })
-
-    function addTodoItem(todo) {
-      todoItems.value.push(todo)
-      localStorage.setItem(todo, todo)
-    }
-
     function removeTodoItem(item, index) {
       todoItems.value.splice(index, 1)
       localStorage.removeItem(item)
     }
+
+    const { todoItems, addTodoItem } = useTodo()
 
     return { todoItems, addTodoItem, removeTodoItem }
   }
