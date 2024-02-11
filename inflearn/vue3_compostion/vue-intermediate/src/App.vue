@@ -10,7 +10,7 @@
 import TodoHeader from '@/components/TodoHeader.vue'
 import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
-import { ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 
 export default {
   components: {
@@ -40,7 +40,20 @@ export default {
       return result
     }
 
-    todoItems.value = fetchTodos()
+    // 라이프 사이클 API가 적용된 구간 (created,BeforeMouted )
+    // todoItems.value = fetchTodos()
+
+    console.log('1 : setup called') // 1
+
+    // 라이프 사이클 API
+    onBeforeMount(() => {
+      console.log('2 : onBeforeMount called') // 2
+      todoItems.value = fetchTodos()
+    })
+
+    onMounted(() => {
+      console.log('3 : onMounted called') // 3
+    })
 
     function addTodoItem(todo) {
       todoItems.value.push(todo)
