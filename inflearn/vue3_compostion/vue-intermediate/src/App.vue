@@ -11,6 +11,7 @@ import TodoHeader from '@/components/TodoHeader.vue'
 import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
 import { useTodo } from './hooks/useTodo'
+import { onBeforeMount } from 'vue'
 
 export default {
   components: {
@@ -26,12 +27,14 @@ export default {
     }
   },
   setup() {
-    function removeTodoItem(item, index) {
-      todoItems.value.splice(index, 1)
-      localStorage.removeItem(item)
-    }
+    const { todoItems, fetchTodos, addTodoItem, removeTodoItem } = useTodo()
 
-    const { todoItems, addTodoItem } = useTodo()
+    // 라이프 사이클 API
+    // 동작을 볼 수 있게 해줌
+    onBeforeMount(() => {
+      console.log('2 : onBeforeMount called') // 2
+      todoItems.value = fetchTodos()
+    })
 
     return { todoItems, addTodoItem, removeTodoItem }
   }
