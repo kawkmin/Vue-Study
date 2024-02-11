@@ -8,7 +8,16 @@
 import { ref } from 'vue'
 
 //data
-const items = ref(['애플', '삼성', '인프런'])
+const items = ref([])
+
+// methods
+function fetchTodos() {
+  for (let i = 0; i < localStorage.length; i++) {
+    items.value.push(localStorage.key(i))
+  }
+}
+
+fetchTodos()
 </script>
 
 <style lang="scss" scoped></style>
