@@ -1,23 +1,26 @@
 <template>
   <ul>
-    <li v-for="(item, index) in items" :key="index">{{ item }}</li>
+    <li v-for="(item, index) in todoItems" :key="index">{{ item }}</li>
   </ul>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+// import { ref } from 'vue'
 
-//data
-const items = ref([])
+defineProps(['todoItems'])
 
-// methods
-function fetchTodos() {
-  for (let i = 0; i < localStorage.length; i++) {
-    items.value.push(localStorage.key(i))
-  }
-}
+// //data
+// const items = ref([])
 
-fetchTodos()
+// // methods
+// function fetchTodos() {
+//   for (let i = 0; i < localStorage.length; i++) {
+//     const newLocal = localStorage.key(i)
+//     items.value.push(newLocal)
+//   }
+// }
+
+// fetchTodos()
 </script>
 
 <style lang="scss" scoped></style>
