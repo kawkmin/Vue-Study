@@ -1,17 +1,17 @@
 <template>
 	<div>
-		<h2>제목</h2>
-		<p>내용</p>
-		<p class="text-muted">2020-01-01</p>
+		<h2>{{ form.title }}</h2>
+		<p>{{ form.content }}</p>
+		<p class="text-muted">{{ form.createdAt }}</p>
 		<hr class="my-4" />
 		<div class="row">
 			<div class="col-auto">
 				<button class="btn btn-outline-dark">이전글</button>
 			</div>
-			<div class="col-auto me-auto"></div>
 			<div class="col-auto">
 				<button class="btn btn-outline-dark">다음글</button>
 			</div>
+			<div class="col-auto me-auto"></div>
 			<div class="col-auto">
 				<button class="btn btn-outline-dark" @click="goListPage">목록</button>
 			</div>
@@ -28,11 +28,33 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { getPostById } from '@/api/posts';
+import { ref } from 'vue';
 
-const route = useRoute();
+const props = defineProps({
+	id: Number,
+});
 const router = useRouter();
-const id = route.params.id;
+
+// const id = route.params.id;
+/**
+ * ref
+ * 장점) 객체 할당 가능
+ * 단점) .value를 써야함
+ *
+ * reactive
+ * 장점) .value 필요없음
+ * 단점) 객체 할당 불가능
+ */
+const form = ref({});
+// let form = reactive({});
+
+const fetchPost = () => {
+	const data = getPostById(props.id);
+	form.value = { ...data };
+};
+fetchPost();
 
 const goListPage = () =>
 	router.push({
@@ -41,7 +63,7 @@ const goListPage = () =>
 const goEditPage = () =>
 	router.push({
 		name: 'PostEdit',
-		params: { id },
+		params: { id: props.id },
 	});
 </script>
 
