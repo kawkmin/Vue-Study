@@ -1,4 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {
+	createRouter,
+	createWebHashHistory,
+	createWebHistory,
+} from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import AboutView from '@/views/AboutView.vue';
 import PostCreateView from '@/views/posts/PostCreateView.vue';
@@ -76,7 +80,8 @@ const routes = [
 ];
 
 const router = createRouter({
-	history: createWebHistory('/'),
+	// history: createWebHistory('/'), 히스토리모드(url전부) - 서버 추가 설정 필요
+	history: createWebHashHistory(), // 해시 모드(도메인만) - CEO 나쁜 영향
 	routes,
 });
 
