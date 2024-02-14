@@ -66,7 +66,7 @@ const edit = async () => {
 		// 	name: 'PostDetail',
 		// 	params: { id },
 		// });
-		vAlert('수정이 완료되었습니다!!!', 'success');
+		vAlert('수정이 완료되었습니다!!!', 'sucess');
 	} catch (error) {
 		console.log(error);
 	}
