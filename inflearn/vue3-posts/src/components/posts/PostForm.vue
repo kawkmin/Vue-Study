@@ -2,7 +2,14 @@
 	<form>
 		<div class="mb-3">
 			<label for="title" class="form-label">제목</label>
-			<input v-model="title" type="text" class="form-control" id="title" />
+			<input
+				v-color="'blue'"
+				v-focus
+				v-model="title"
+				type="text"
+				class="form-control"
+				id="title"
+			/>
 		</div>
 		<div class="mb-3">
 			<label for="content" class="form-label">내용</label>
@@ -20,6 +27,11 @@
 </template>
 
 <script setup>
+// const vFocus = {
+// 	mounted: el => {
+// 		el.focus();
+// 	},
+// };
 // 3.4버전 이후 Multiple v-model
 const title = defineModel('title');
 const content = defineModel('content');

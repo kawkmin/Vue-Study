@@ -6,9 +6,11 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/router';
 import globalComponents from './plugins/global-components.js';
+import globalDirectives from '@/plugins/global-directives.js';
 
 const app = createApp(App);
 app.use(globalComponents);
+app.use(globalDirectives);
 app.use(router);
 app.mount('#app');
 
