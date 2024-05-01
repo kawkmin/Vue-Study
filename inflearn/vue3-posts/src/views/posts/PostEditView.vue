@@ -28,10 +28,13 @@ import { useRoute, useRouter } from 'vue-router';
 import { getPostById, updatePost } from '@/api/posts';
 import { ref } from 'vue';
 import PostForm from '@/components/posts/PostForm.vue';
+import { useAlert } from '@/composables/alert.js';
 
 const route = useRoute();
 const router = useRouter();
 const id = route.params.id;
+const { vAlert, vSuccess } = useAlert();
+
 
 const goDetailPage = () =>
 	router.push({
@@ -66,7 +69,9 @@ const edit = async () => {
 		// 	name: 'PostDetail',
 		// 	params: { id },
 		// });
-		vAlert('수정이 완료되었습니다!!!', 'sucess');
+		// vAlert('수정이 완료되었습니다!!!', 'sucess');
+		await router.push({ name: 'PostDetail', params: { id } });
+		vSuccess('수정이 완료되었습니다!');
 	} catch (error) {
 		console.log(error);
 		vAlert(error.message);
@@ -77,17 +82,17 @@ const edit = async () => {
 // const showAlert = ref(false);
 // const alertMessage = ref('');
 // const alertType = ref('error');
-const alerts = ref([]);
-const vAlert = (message, type = 'error') => {
-	alerts.value.push({ message, type }),
-		// showAlert.value = true;
-		// alertMessage.value = message;
-		// alertType.value = type;
-		setTimeout(() => {
-			// showAlert.value = false;
-			alerts.value.shift(); // 앞에서부터 삭제 queue.poll()같은듯?
-		}, 2000);
-};
+// const alerts = ref([]);
+// const vAlert = (message, type = 'error') => {
+// 	alerts.value.push({ message, type }),
+// 		// showAlert.value = true;
+// 		// alertMessage.value = message;
+// 		// alertType.value = type;
+// 		setTimeout(() => {
+// 			// showAlert.value = false;
+// 			alerts.value.shift(); // 앞에서부터 삭제 queue.poll()같은듯?
+// 		}, 2000);
+// };
 </script>
 
 <style lang="scss" scoped></style>
