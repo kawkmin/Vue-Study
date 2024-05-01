@@ -5,13 +5,14 @@ import 'bootstrap/dist/js/bootstrap.js';
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/router';
-import globalComponents from './plugins/global-components.js';
 import globalDirectives from '@/plugins/global-directives.js';
+import dayjs from '@/plugins/dayjs.js';
 
 const app = createApp(App);
-app.use(globalComponents);
+// app.use(globalComponents); 라이브러리가 자동으로 해줌
 app.use(globalDirectives);
 app.use(router);
+app.use(dayjs);
 app.mount('#app');
 
 // console.log('MODE: ', import.meta.env.MODE);
