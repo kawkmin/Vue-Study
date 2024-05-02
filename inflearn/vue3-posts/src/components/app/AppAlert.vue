@@ -1,13 +1,13 @@
 <template>
 	<!-- <Transition name="slide">
     <div v-if="show" class="app-alert alert" :class="typeStyle" role="alert">
-			{{ message }}
-		</div>
-	</Transition> -->
+      {{ message }}
+    </div>
+  </Transition> -->
 	<div class="app-alert">
 		<TransitionGroup name="slide">
 			<div
-				v-for="({ message, type }, index) in items"
+				v-for="({ message, type }, index) in alerts"
 				:key="index"
 				class="alert"
 				:class="typeStyle(type)"
@@ -20,6 +20,9 @@
 </template>
 
 <script setup>
+import { useAlert } from '@/composables/alert.js';
+
+const { alerts } = useAlert();
 defineProps({
 	items: Array,
 });
@@ -59,10 +62,12 @@ const typeStyle = type => (type === 'error' ? 'alert-danger' : 'alert-primary');
 	opacity: 0;
 	transform: translateY(-30px);
 }
+
 .slide-enter-active,
 .slide-leave-active {
 	transition: all 0.5s ease;
 }
+
 .slide-enter-to,
 .slide-leave-from {
 	opacity: 1;

@@ -11,7 +11,7 @@ const { alerts } = useAlert();
 
 	<TheView></TheView>
 
-	<AppAlert :items="alerts" />
+	<AppAlert />
 </template>
 
 <style lang="scss" scoped></style>
