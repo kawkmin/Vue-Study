@@ -5,6 +5,7 @@
 
 	<div v-else>
 		<h2>{{ post.title }}</h2>
+		<p>id: {{ props.id }}, isOdd: {{ isOdd }}</p>
 		<p>{{ post.content }}</p>
 		<p class="text-muted">
 			{{ $dayjs(post.createdAt).format('YYYY. MM. DD HH:mm:ss') }}
@@ -52,12 +53,19 @@
 import { useRouter } from 'vue-router';
 import { useAxios } from '@/hooks/useAxios.js';
 import { useAlert } from '@/composables/alert.js';
+import { computed, toRefs } from 'vue';
+import { useNumber } from '@/composables/number.js';
 
 const props = defineProps({
 	id: [String, Number],
 });
 const router = useRouter();
+// const idRef = toRef(props, 'id');
+const { id: idRef } = toRefs(props);
+const { isOdd } = useNumber(idRef); // composable로 넘겨도 반응형 잃지 않도록 해줌!
 const { vAlert, vSuccess } = useAlert();
+const url = computed(() => `/posts/${props.id}`);
+const { error, loading, data: post } = useAxios(url);
 /**
  * ref
  * 장점) 객체 할당 가능
@@ -70,7 +78,6 @@ const { vAlert, vSuccess } = useAlert();
 // const post = ref({});
 // let form = reactive({});
 
-const { error, loading, data: post } = useAxios(`/posts/${props.id}`);
 const {
 	error: removeError,
 	loading: removeLoading,
