@@ -1,12 +1,7 @@
 {
   "posts": [
     {
-      "title": "안뇽",
-      "content": "크를ㅋㅋ",
-      "id": 1
-    },
-    {
-      "title": "1123ㅌㅌ",
+      "title": "1123ㅌㅌ2",
       "content": "ㅌㅊㅋㅋ",
       "createdAt": 2107878841398,
       "id": 2
@@ -22,6 +17,12 @@
       "content": "233",
       "createdAt": 1707878843722,
       "id": 4
+    },
+    {
+      "title": "ㅇㄹㅇ",
+      "content": "ㅇㄹㅇㄹ",
+      "createdAt": 1714638705260,
+      "id": 5
     }
   ]
 }

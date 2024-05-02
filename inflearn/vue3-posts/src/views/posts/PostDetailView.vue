@@ -41,7 +41,7 @@
 						></span>
 						<span class="visually-hidden">Loading...</span>
 					</template>
-					<template v-else> 삭제 </template>
+					<template v-else> 삭제</template>
 				</button>
 			</div>
 		</div>
@@ -50,8 +50,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { getPostById, deletePost } from '@/api/posts';
-import { ref } from 'vue';
+import { useAxios } from '@/hooks/useAxios.js';
 import { useAlert } from '@/composables/alert.js';
 
 const props = defineProps({
@@ -59,8 +58,6 @@ const props = defineProps({
 });
 const router = useRouter();
 const { vAlert, vSuccess } = useAlert();
-
-// const id = route.params.id;
 /**
  * ref
  * 장점) 객체 할당 가능
@@ -70,48 +67,33 @@ const { vAlert, vSuccess } = useAlert();
  * 장점) .value 필요없음
  * 단점) 객체 할당 불가능
  */
-const post = ref({});
+// const post = ref({});
 // let form = reactive({});
 
-const error = ref(null);
-const loading = ref(false);
-
-const fetchPost = async () => {
-	try {
-		loading.value = true;
-		const { data } = await getPostById(props.id);
-		setPost(data);
-	} catch (err) {
-		error.value = err;
-	} finally {
-		loading.value = false;
-	}
-};
-const setPost = ({ title, content, createdAt }) => {
-	post.value.title = title;
-	post.value.content = content;
-	post.value.createdAt = createdAt;
-};
-fetchPost();
-
-const removeError = ref(null);
-const removeLoading = ref(false)
-
+const { error, loading, data: post } = useAxios(`/posts/${props.id}`);
+const {
+	error: removeError,
+	loading: removeLoading,
+	execute,
+} = useAxios(
+	`/posts/${props.id}`,
+	{ method: 'delete' },
+	{
+		immediate: false,
+		onSuccess: () => {
+			vSuccess('삭제가 완료되었습니다.');
+			router.push({ name: 'PostList' });
+		},
+		onError: err => {
+			vAlert(err.message);
+		},
+	},
+);
 const remove = async () => {
-	try {
-		if (confirm('삭제 하시겠습니까?') === false) {
-			return;
-		}
-		removeLoading.value = true;
-		await deletePost(props.id);
-		vSuccess('삭제가 완료되었습니다.');
-		await router.push({ name: 'PostList' });
-	} catch (err) {
-		vAlert(err.message);
-		removeError.value = err;
-	} finally {
-		removeLoading.value = false;
+	if (confirm('삭제 하시겠습니까?') === false) {
+		return;
 	}
+	execute();
 };
 
 const goListPage = () =>

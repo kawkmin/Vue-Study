@@ -56,11 +56,10 @@ import PostModal from '@/components/posts/PostModal.vue';
 import { computed, ref, watchEffect } from 'vue';
 import { getPosts } from '@/api/posts';
 import { useRouter } from 'vue-router';
+import { useAxios } from '@/hooks/useAxios.js';
 
 const router = useRouter();
-const posts = ref([]);
-const error = ref(null);
-const loading = ref(false);
+
 const params = ref({
 	_sort: 'createdAt',
 	_order: 'desc',
@@ -68,8 +67,16 @@ const params = ref({
 	_limit: 3,
 	title_like: null,
 });
+
+const {
+	response,
+	data: posts,
+	error,
+	loading,
+} = useAxios('/posts', { params });
 //pagination
-const totalCount = ref(0);
+const totalCount = computed(() => response.value.headers['x-total-count']);
+
 const pageCount = computed(() =>
 	Math.ceil(totalCount.value / params.value._limit),
 );
