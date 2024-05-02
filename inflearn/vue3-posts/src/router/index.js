@@ -1,8 +1,4 @@
-import {
-	createRouter,
-	createWebHashHistory,
-	createWebHistory,
-} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import AboutView from '@/views/AboutView.vue';
 import PostCreateView from '@/views/posts/PostCreateView.vue';
@@ -14,6 +10,7 @@ import NestedView from '@/views/nested/NestedView.vue';
 import NestedOneView from '@/views/nested/NestedOneView.vue';
 import NestedTwoView from '@/views/nested/NestedTwoView.vue';
 import NestedHomeView from '@/views/nested/NestedHomeView.vue';
+import MyPage from '@/MyPage.vue';
 
 const routes = [
 	{
@@ -77,12 +74,35 @@ const routes = [
 			},
 		],
 	},
+	{
+		path: '/my',
+		name: 'MyPage',
+		component: MyPage,
+		beforeEnter: [removeQueryString],
+	},
 ];
 
+function removeQueryString(to) {
+	if (Object.keys(to.query).length > 0) {
+		return { path: to.path, query: {} };
+	}
+}
+
 const router = createRouter({
-	// history: createWebHistory('/'), 히스토리모드(url전부) - 서버 추가 설정 필요
-	history: createWebHashHistory(), // 해시 모드(도메인만) - CEO 나쁜 영향
+	history: createWebHistory('/'), // 히스토리모드(url전부) - 서버 추가 설정 필요
+	// history: createWebHashHistory(), // 해시 모드(도메인만) - CEO 나쁜 영향
 	routes,
+});
+
+router.beforeEach((to, from) => {
+	console.log('to: ', to);
+	console.log('from: ', from);
+	if (to.name === 'MyPage') {
+		// router.push({name: 'Home'})
+		// return false;
+		// return { name: 'Home' };
+		return '/posts';
+	}
 });
 
 export default router;

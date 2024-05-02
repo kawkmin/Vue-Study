@@ -18,23 +18,28 @@
 					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
 							<RouterLink class="nav-link" active-class="active" to="/"
-								>Home</RouterLink
-							>
+								>Home
+							</RouterLink>
 						</li>
 						<li class="nav-item">
 							<RouterLink class="nav-link" active-class="active" to="/about"
-								>About</RouterLink
-							>
+								>About
+							</RouterLink>
 						</li>
 						<li class="nav-item">
 							<RouterLink class="nav-link" active-class="active" to="/posts"
-								>게시글</RouterLink
-							>
+								>게시글
+							</RouterLink>
 						</li>
 						<li class="nav-item">
 							<RouterLink class="nav-link" active-class="active" to="/nested"
-								>Nested</RouterLink
-							>
+								>Nested
+							</RouterLink>
+						</li>
+						<li class="nav-item">
+							<RouterLink class="nav-link" active-class="active" to="/my">
+								MyPage
+							</RouterLink>
 						</li>
 					</ul>
 					<div class="d-flex">
